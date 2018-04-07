@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row mt-2">
+    <div class="col-md-7">
+        <canvas id="mapMain" width="600" height="500"></canvas>
+    </div>
+    <div class="col-md-5 mt-2">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+            Chọn bản đồ
+        </button>
+
+        <button class="btn btn-block btn-success mt-1">
+            BẮT ĐẦU
+        </button>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Chọn bản đồ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @{
+                        var count = 0;
+                    }
+                    <div class="card-deck">
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            {
+                                count = count + 1;
+                        } 
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="~/Asset/map.png" />
+
+                                <div class="card-body">
+                                    <a href="#" class="card-link selectmap" data-mapid="Map_@count">Bản đồ @count</a>
+
+                                    @*<p class="card-text">Bản đồ @count</p>*@
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                    <div class="card-deck mt-2">
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            {
+                                count = count + 1;
+                            }
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="~/Asset/map.png" />
+
+                                <div class="card-body">
+                                    <a href="#" class="card-link" data-mapid="Map_@count">Bản đồ @count</a>
+                                    
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script>
+        $(document).ready(function () {
+            var canvas = document.getElementById('mapMain');
+            var context = canvas.getContext('2d');
+            context.beginPath();
+            //draw line with x
+            for (var i = 0; i < 21; i++) {
+
+                context.moveTo(i * 30, 0);
+                context.lineTo(i * 30, 500);
+
+
+            }
+            //draw line with y
+            for (var i = 0; i < 22; i++) {
+
+                context.moveTo(0, i * 30);
+                context.lineTo(600, i * 30);
+            }
+
+
+            context.closePath();
+            context.lineWidth = 1;
+            context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7)
+
+            //'#3f51b5';
+            context.stroke();
+            $(".selectmap").on("click", function (e) {
+                e.preventDefault();
+                //exampleModalCenter.modal("toggle");
+                var mapid = $(this).data("mapid");
+                $.ajax({
+                    url: "/Tank/LoadMap?mapid=" + mapid,
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function () {
+
+                    }
+                })
+            });
+        });
+
+
+    </script>
+
+}
