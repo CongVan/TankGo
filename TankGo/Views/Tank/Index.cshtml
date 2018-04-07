@@ -3,20 +3,23 @@
     ViewBag.Title = "Index";
 }
 
+<img id="imgTank" hidden src="~/Asset/Tank.png" />
+<img id="imgWall" hidden src="~/Asset/Wall.png" />
 <div class="row mt-2">
-    <div class="col-md-7">
-        <canvas id="mapMain" width="600" height="500"></canvas>
-    </div>
-    <div class="col-md-5 mt-2">
+    <div class="col-md-5 mb-3">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+        <button type="button" class="btn btn-outline-danger " data-toggle="modal" data-target="#exampleModalCenter">
             Chọn bản đồ
         </button>
 
-        <button class="btn btn-block btn-success mt-1">
+        <button class="btn  btn-success mt-1">
             BẮT ĐẦU
         </button>
     </div>
+    <div class="col-md-12">
+        <canvas id="mapMain"></canvas>
+    </div>
+   
 </div>
 
 
@@ -64,7 +67,7 @@
                                 <img class="card-img-top" src="~/Asset/map.png" />
 
                                 <div class="card-body">
-                                    <a href="#" class="card-link" data-mapid="Map_@count">Bản đồ @count</a>
+                                    <a href="#" class="card-link selectmap" data-mapid="Map_@count">Bản đồ @count</a>
                                     
                                 </div>
                             </div>
@@ -84,48 +87,91 @@
 
 @section js{
     <script>
+        var Map = null, Cols = 0, Rows = 0;
+        var imgTank = document.getElementById("imgTank");// $("#imgTank").val();
+        var imgWall = document.getElementById("imgWall");//$("#imgWall").val();
+        var canvas = document.getElementById('mapMain');
+        var context = canvas.getContext('2d');
         $(document).ready(function () {
-            var canvas = document.getElementById('mapMain');
-            var context = canvas.getContext('2d');
-            context.beginPath();
-            //draw line with x
-            for (var i = 0; i < 21; i++) {
-
-                context.moveTo(i * 30, 0);
-                context.lineTo(i * 30, 500);
-
-
-            }
-            //draw line with y
-            for (var i = 0; i < 22; i++) {
-
-                context.moveTo(0, i * 30);
-                context.lineTo(600, i * 30);
-            }
+            
+            //context.beginPath();
+            ////draw line with x
+            //for (var i = 0; i < 37; i++) {
+            //    context.moveTo(i * 30, 0);
+            //    context.lineTo(i * 30, 1110);
+            //}
+            ////draw line with y
+            //for (var i = 0; i < 37; i++) {
+            //    context.moveTo(0, i * 30);
+            //    context.lineTo(1110, i * 30);
+            //}
 
 
-            context.closePath();
-            context.lineWidth = 1;
-            context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7)
+            //context.closePath();
+            //context.lineWidth = 1;
+            //context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7)
 
-            //'#3f51b5';
-            context.stroke();
+            ////'#3f51b5';
+            //context.stroke();
+            
             $(".selectmap").on("click", function (e) {
                 e.preventDefault();
-                //exampleModalCenter.modal("toggle");
+                $("#exampleModalCenter").modal("toggle");
                 var mapid = $(this).data("mapid");
                 $.ajax({
                     url: "/Tank/LoadMap?mapid=" + mapid,
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
+                        Map = data.Map;
+                        Cols = data.Cols;
+                        Rows = data.Rows;
+                        DrawMap();
                     },
                     error: function () {
 
                     }
                 })
             });
+            
         });
+        function DrawMap() {
+            if (Rows < 0 || Cols < 0 || Map == null) {
+                alert("Không thể khởi tạo bản đồ.");
+                return;
+            }
+            var widthMap = Cols * 30;
+            var heightMap = Rows * 30;
 
+            $("#mapMain").prop("width", widthMap);
+            $("#mapMain").prop("height", heightMap);
+
+            context.beginPath();
+            //draw line with x
+            //for (var i = 0; i <= Cols; i++) {
+            //    context.moveTo(i * 30, 0);
+            //    context.lineTo(i * 30, heightMap);
+            //}
+            ////draw line with y
+            //for (var i = 0; i <= Rows; i++) {
+            //    context.moveTo(0, i * 30);
+            //    context.lineTo(widthMap, i * 30);
+            //}
+            $.each(Map, function (key, cell) {
+                if (cell.Status == 1) {
+                    context.drawImage(imgWall, (cell.Row *30),(cell.Col*30), 30-1, 30-1);
+                }
+                if (cell.Status == -1) {
+                    context.drawImage(imgTank, (cell.Row * 30), (cell.Col * 30), 30 - 1, 30 - 1);
+                }
+            });
+            
+            context.closePath();
+            context.lineWidth = 1;
+            context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7)
+
+            //'#3f51b5';
+            context.stroke();
+        }
 
     </script>
 

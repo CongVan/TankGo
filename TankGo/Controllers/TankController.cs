@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TankGo.Models;
 
 namespace TankGo.Controllers
 {
@@ -17,14 +18,33 @@ namespace TankGo.Controllers
         public ActionResult LoadMap(string mapid)
         {
             string[] lines = System.IO.File.ReadAllLines(HttpContext.Server.MapPath("/layouts/" + mapid + ".txt"));
-
+            int rows=0, cols=0;
+            cols = lines[0].Length;
+            var Map = new List<Cell>();
             foreach (string line in lines)
             {
-                // Use a tab to indent each line of the file.
-                Console.WriteLine("\t" + line);
+                
+                for (int i = 0;  i < cols; i++)
+                {
+                    var cell = new Cell();
+                    cell.Row = rows;
+                    cell.Col = i;
+                    switch (line[i])
+                    {
+                        case '%':cell.Status = 1;break;//vật cản
+                        case ' ':cell.Status = 0;break;//đường đi
+                        case 'P':cell.Status = -1;break;//bắt đầu
+                        case 'G':cell.Status = 99;break;//kết thúc
+                        default:
+                            cell.Status = 1;
+                            break;
+                    }
+                    Map.Add(cell);
+                }
+                rows++;
             }
             
-            return Json(lines.ToList(),JsonRequestBehavior.AllowGet);
+            return Json(new {Map=Map,Rows=rows,Cols=cols },JsonRequestBehavior.AllowGet);
         }
     }
 }
