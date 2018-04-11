@@ -89,6 +89,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Asset\background.png" />
+    <Content Include="Asset\footprint.png" />
+    <Content Include="Asset\mario.png" />
+    <Content Include="Asset\princess.png" />
     <Content Include="Asset\Tank.png" />
     <Content Include="Asset\Tank_Down.png" />
     <Content Include="Asset\Tank_Left.png" />
