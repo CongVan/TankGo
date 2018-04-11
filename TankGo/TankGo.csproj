@@ -90,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Asset\Tank.png" />
+    <Content Include="Asset\Tank_Down.png" />
+    <Content Include="Asset\Tank_Left.png" />
+    <Content Include="Asset\Tank_Right.png" />
     <Content Include="Asset\Wall.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

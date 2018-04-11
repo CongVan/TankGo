@@ -4,7 +4,11 @@
 }
 
 <img id="imgTank" hidden src="~/Asset/Tank.png" />
+<img id="imgTank_Left" hidden src="~/Asset/Tank_Left.png" />
+<img id="imgTank_Right" hidden src="~/Asset/Tank_Right.png" />
+<img id="imgTank_Down" hidden src="~/Asset/Tank_Down.png" />
 <img id="imgWall" hidden src="~/Asset/Wall.png" />
+
 <div class="row mt-2">
     <div class="col-md-5 mb-3">
         <!-- Button trigger modal -->
@@ -89,9 +93,13 @@
     <script>
         var Map = null, Cols = 0, Rows = 0;
         var imgTank = document.getElementById("imgTank");// $("#imgTank").val();
+        var imgTank_Left = document.getElementById("imgTank_Left");
+        var imgTank_Right = document.getElementById("imgTank_Right");
+        var imgTank_Down = document.getElementById("imgTank_Down");
         var imgWall = document.getElementById("imgWall");//$("#imgWall").val();
         var canvas = document.getElementById('mapMain');
         var context = canvas.getContext('2d');
+        var pxStart = 0, pyStart = 0;
         $(document).ready(function () {
             
             //context.beginPath();
@@ -144,7 +152,7 @@
 
             $("#mapMain").prop("width", widthMap);
             $("#mapMain").prop("height", heightMap);
-
+            $("#mapMain").css("background-color", '#000');
             context.beginPath();
             //draw line with x
             //for (var i = 0; i <= Cols; i++) {
@@ -158,20 +166,29 @@
             //}
             $.each(Map, function (key, cell) {
                 if (cell.Status == 1) {
-                    context.drawImage(imgWall, (cell.Row *30),(cell.Col*30), 30-1, 30-1);
+                    context.drawImage(imgWall, (cell.Row *30),(cell.Col*30), 30, 30);
                 }
                 if (cell.Status == -1) {
+                    //context.rotate(90);
+                    pxStart = cell.Col;
+                    pyStart = cell.Row;
                     context.drawImage(imgTank, (cell.Row * 30), (cell.Col * 30), 30 - 1, 30 - 1);
                 }
             });
-            
+            context.fillStyle = "#9ea7b8";
             context.closePath();
+            
             context.lineWidth = 1;
             context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7)
 
             //'#3f51b5';
             context.stroke();
+
+            
         }
+        var Go = setInterval(function () {
+
+        });
 
     </script>
 
