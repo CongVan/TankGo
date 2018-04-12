@@ -53,14 +53,14 @@
             ////'#3f51b5';
             //context.stroke();
 
-            $(".selectmap").on("click", function (e) {
+            $("#lstMap").on("change", function (e) {
                 e.preventDefault();
                 //$("#exampleModalCenter").modal("hide");
                 ////$("#").collapse('hide');
                 //$('#accordion').collapse({
                 //    toggle: false
                 //})
-                var mapid = $(this).data("mapid");
+                var mapid = $(this).val();
                 $.ajax({
                     url: "/Tank/LoadMap?mapid=" + mapid,
                     success: function (data) {
@@ -87,7 +87,7 @@
 
             $("#mapMain").prop("width", widthMap);
             $("#mapMain").prop("height", heightMap);
-            //  $("#mapMain").css("background-image", 'linear-gradient(to left, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%),url(/Asset/background.png)');
+              $("#mapMain").css("background-image", 'linear-gradient(to left, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%),url(/Asset/background.png)');
             context.beginPath();
             //draw line with x
             //for (var i = 0; i <= Cols; i++) {

@@ -20,37 +20,24 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav">
                 @*<li class="nav-item active">
                         <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li>*@
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-success" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Chọn bản đồ
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @{
-                            var count = 0;
-                        }
-
-                        @for (int i = 0; i < 6; i++)
+                <li class="nav-item mr-5">
+                    <select class="custom-select mr-sm-2" id="lstMap">
+                        <option selected>Chọn bản đồ ... </option>
+                        @for (int i = 1; i < 6; i++)
                         {
-                            {
-                                count = count + 1;
-                            }
-                            @*<button class="btn btn-light btn-lg  mr-4" >Bản đồ @count</button>*@
-                            <a class="dropdown-item selectmap" href="#" data-mapid="Map_@count">Bản đồ @count</a>
+                        <option value="Map_@i">Bản đồ @i</option>
+
                         }
-
-
-                        @*<a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>*@
-                    </div>
+                    </select>
                 </li>
+               
                 <li class="nav-item">
                     <button class="btn btn-outline-primary">Bắt đầu</button>
                 </li>
