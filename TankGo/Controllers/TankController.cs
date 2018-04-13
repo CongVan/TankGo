@@ -47,7 +47,7 @@ namespace TankGo.Controllers
                             cell.Status = 1;
                             break;
                     }
-                   // MaTran[rows, i] = line[i]== ' ' ? 0 : line[i] == 'P' ? -1 : line[i] == 'G' ? 99 : 1;
+                    MaTran[rows, i] = cell.Status;
                     if (cell.Status == -1)
                     {
                         P.x = rows;
