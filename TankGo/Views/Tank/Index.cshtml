@@ -75,7 +75,18 @@
                     }
                 })
             });
+            $("#LetGo").on("click", function () {
+                $.ajax({
+                    url: "/Tank/LetGo",
+                    success: function (Map) {
+                        console.log(Map);
+                        $.each(Map, function (key, cell) {
+                            context.drawImage(imgMario, (cell.Col * 30), (cell.Row * 30), 30, 30);
 
+                        });
+                    }
+                });
+            });
         });
         function DrawMap() {
             if (Rows < 0 || Cols < 0 || Map == null) {
@@ -133,9 +144,7 @@
 
 
         }
-        var Go = setInterval(function () {
-
-        });
+       
 
     </script>
 
