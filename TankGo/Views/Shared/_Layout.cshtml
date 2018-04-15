@@ -4,17 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mario tìm công chúa</title>
-    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
-    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
-    @*<script src="~/Scripts/modernizr-2.6.2.js"></script>
-    *@
     <link href="~/dist/css/bootstrap.css" rel="stylesheet" />
+
+    @*<link href="~/dist/css/bootstrap.css" rel="stylesheet" />*@
     @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">*@
 
 </head>
-<body class="container">
+
+<body class="container-fluid">
+      
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Menu</a>
+        <a class="navbar-brand" href="#">Tùy chọn </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,10 +27,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li>*@
-                <li class="nav-item mr-5">
+                <li class="nav-item mr-3">
                     <select class="custom-select mr-sm-2" id="lstMap">
-                        <option selected>Chọn bản đồ ... </option>
-                        @for (int i = 1; i <= 6; i++)
+                        <option selected value="0">Chọn bản đồ ... </option>
+                        @for (int i = 1; i <= 8; i++)
                         {
                         <option value="Map_@i">Bản đồ @i</option>
 
@@ -38,11 +38,34 @@
                     </select>
                 </li>
                
-                <li class="nav-item">
-                    <button class="btn btn-outline-primary" id="LetGo">Bắt đầu</button>
-                </li>
+               
+              
             </ul>
+            <ul class="navbar-nav mr-auto">
+                @*<li class="nav-item active">
+                <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>*@
+                <li class="nav-item mr-3">
+                    <select class="custom-select mr-sm-2" id="lstStep">
+                        <option selected value="50">50</option>
+                        @for (int i = 1; i <= 8; i++)
+                        {
+                           
+                            <option value="@(i*100)">@(i*100)</option>
 
+                        }
+                    </select>
+                </li>
+
+                <li class="nav-item">
+                    <button class="btn btn-primary" id="LetGo" disabled>Bắt đầu</button>
+                </li>
+
+            </ul>
+            <button class="btn btn-danger font-weight-bold" id="CountStep">Số bước đi: </button>
             @*<form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -50,19 +73,13 @@
         </div>
     </nav>
 
-    <div class="container body-content">
+    <div class="container-fluid">
         @RenderBody()
-        <hr />
+        @*<hr />*@
         @*<footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>*@
     </div>
-
-    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-        <script src="~/Scripts/bootstrap.min.js"></script>*@
-    @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>*@
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>*@
-    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>*@
 
     <script src="~/dist/js/jquery-3.2.1.min.js"></script>
     <script src="~/dist/js/bootstrap.js"></script>

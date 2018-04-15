@@ -9,7 +9,7 @@ namespace TankGo.Controllers
 {
     public class TankController : Controller
     {
-        static  List<Cell> Map = new List<Cell>();
+          List<Cell> Map = new List<Cell>();
         static  List<List<int>> Matrix = new List<List<int>>();
         static  int[,] MaTran = null;
         static  Node P = new Node(), G = new Node();
@@ -44,7 +44,7 @@ namespace TankGo.Controllers
                         case 'P':cell.Status = -1;break;//bắt đầu
                         case 'G':cell.Status = 99;break;//kết thúc
                         default:
-                            cell.Status = 1;
+                            cell.Status = 0;
                             break;
                     }
                     MaTran[rows, i] = cell.Status;
