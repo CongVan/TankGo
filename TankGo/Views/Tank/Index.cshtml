@@ -15,73 +15,97 @@
         color: white;
         font-size: 2em;
     }
+
     .sk-cube-grid {
-  width: 40px;
-  height: 40px;
-  margin: 20px auto;
-}
+        width: 40px;
+        height: 40px;
+        margin: 20px auto;
+    }
 
-.sk-cube-grid .sk-cube {
-  width: 33%;
-  height: 33%;
-  background-color: #ffffff;
-  float: left;
-  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-}
-.sk-cube-grid .sk-cube1 {
-  -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
-.sk-cube-grid .sk-cube2 {
-  -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s; }
-.sk-cube-grid .sk-cube3 {
-  -webkit-animation-delay: 0.4s;
-          animation-delay: 0.4s; }
-.sk-cube-grid .sk-cube4 {
-  -webkit-animation-delay: 0.1s;
-          animation-delay: 0.1s; }
-.sk-cube-grid .sk-cube5 {
-  -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
-.sk-cube-grid .sk-cube6 {
-  -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s; }
-.sk-cube-grid .sk-cube7 {
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s; }
-.sk-cube-grid .sk-cube8 {
-  -webkit-animation-delay: 0.1s;
-          animation-delay: 0.1s; }
-.sk-cube-grid .sk-cube9 {
-  -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
+        .sk-cube-grid .sk-cube {
+            width: 33%;
+            height: 33%;
+            background-color: #ffffff;
+            float: left;
+            -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+            animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+        }
 
-@@-webkit-keyframes sk-cubeGridScaleDelay {
-  0%, 70%, 100% {
-    -webkit-transform: scale3D(1, 1, 1);
+        .sk-cube-grid .sk-cube1 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+
+        .sk-cube-grid .sk-cube2 {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+        }
+
+        .sk-cube-grid .sk-cube3 {
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
+
+        .sk-cube-grid .sk-cube4 {
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+        }
+
+        .sk-cube-grid .sk-cube5 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+
+        .sk-cube-grid .sk-cube6 {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+        }
+
+        .sk-cube-grid .sk-cube7 {
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+        }
+
+        .sk-cube-grid .sk-cube8 {
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+        }
+
+        .sk-cube-grid .sk-cube9 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+
+    @@-webkit-keyframes sk-cubeGridScaleDelay {
+        0%, 70%, 100% {
+            -webkit-transform: scale3D(1, 1, 1);
             transform: scale3D(1, 1, 1);
-  } 35% {
-    -webkit-transform: scale3D(0, 0, 1);
-            transform: scale3D(0, 0, 1);
-  }
-}
+        }
 
-@@keyframes sk-cubeGridScaleDelay {
-  0%, 70%, 100% {
-    -webkit-transform: scale3D(1, 1, 1);
-            transform: scale3D(1, 1, 1);
-  } 35% {
-    -webkit-transform: scale3D(0, 0, 1);
+        35% {
+            -webkit-transform: scale3D(0, 0, 1);
             transform: scale3D(0, 0, 1);
-  }
-}
+        }
+    }
+
+    @@keyframes sk-cubeGridScaleDelay {
+        0%, 70%, 100% {
+            -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+        }
+
+        35% {
+            -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1);
+        }
+    }
 </style>
 <img id="imgMario" hidden src="~/Asset/mario.png" />
 <img id="imgPrincess" hidden src="~/Asset/princess.png" />
 <img id="imgWall" hidden src="~/Asset/Wall.png" />
 <img id="imgFoot" hidden src="~/Asset/footprint.png" />
-<div id="loaderMain" style="width:100%;height:100%;position:fixed;background-color:#000000;opacity:0.3;display:none;z-index:1000">
+<img id="imgWallOption" hidden src="~/Asset/WallOption.png" />
+<div id="loaderMain" style="width:100%;height:100%;position:fixed;background-color:#000000;opacity:0.6;display:none;z-index:1000">
     <div class="sk-cube-grid">
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
@@ -93,31 +117,31 @@
         <div class="sk-cube sk-cube8"></div>
         <div class="sk-cube sk-cube9"></div>
     </div>
-    <h6 class="text-center text-white">Đang tải bản đồ...</h6>
-</div> 
+    <h6 class="text-center text-white" id="txtLoader">Đang tải...</h6>
+</div>
 <div class="row mt-2">
 
     <div class="col-md-10">
-        <canvas id="mapMain"></canvas>
+        <canvas id="mapMain" style="cursor:pointer"></canvas>
     </div>
 
 </div>
 
-
-
 @section js{
     <script>
-        var OldMap,Map = null, Cols = 0, Rows = 0, Speed = 50;
+        var OldMap, Map = null, arrMap = [], Cols = 0, Rows = 0, Speed = 50;
         var widthMap = 0, heightMap = 0;
-        
+
         var imgMario = document.getElementById("imgMario");// $("#imgTank").val();
         var imgPrincess = document.getElementById("imgPrincess")
         var imgWall = document.getElementById("imgWall");//$("#imgWall").val();
         var imgFoot = document.getElementById("imgFoot");
+        var imgWallOption = document.getElementById("imgWallOption");
         var canvas = document.getElementById('mapMain');
         var intervalgo = null;
         var context = canvas.getContext('2d');
-        var pxStart = 0, pyStart = 0, pyEnd = 0, pxEnd = 0;
+        var pxStart = 0, pyStart = 0, pyEnd = 0, pxEnd = 0, hasOption = false;
+        var oldX = -1, oldY = -1;
         $(document).ajaxStart(function () {
             // Show image container
             $("#loaderMain").show();
@@ -128,28 +152,96 @@
         });
         $(document).ready(function () {
 
-            //context.beginPath();
-            ////draw line with x
-            //for (var i = 0; i < 37; i++) {
-            //    context.moveTo(i * 30, 0);
-            //    context.lineTo(i * 30, 1110);
-            //}
-            ////draw line with y
-            //for (var i = 0; i < 37; i++) {
-            //    context.moveTo(0, i * 30);
-            //    context.lineTo(1110, i * 30);
-            //}
+
+            canvas.addEventListener('click', function (evt) {
+                if (hasOption == 0) {
+                    return;
+                }
+                var rect = canvas.getBoundingClientRect();
+                var mouseX = evt.clientX - rect.left - 0.5;
+                var mouseY = evt.clientY - rect.top;
+                if (mouseX < 0 || mouseY < 0 || mouseX > widthMap || mouseY > heightMap) {
+                    return;
+                }
+                if (mouseX % 30 == 0 || mouseY % 30 == 0) {
+                    return;
+                }
 
 
-            //context.closePath();
-            //context.lineWidth = 1;
-            //context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7)
+                var i = Math.floor(mouseX / 30), j = Math.floor(mouseY / 30);
 
-            ////'#3f51b5';
-            //context.stroke();
 
+                if (j <= Rows && i <= Cols && arrMap[j][i] == 0) {
+                    if (hasOption == 1) {
+                        context.drawImage(x, (i * 30), (j * 30), 30, 30);
+                        arrMap[j][i] = 1;
+                    }
+                    if (hasOption == 2) {
+                        context.drawImage(imgMario, (i * 30), (j * 30), 30, 30);
+                        arrMap[j][i] = -1;
+                    }
+                    if (hasOption == 3) {
+                        context.drawImage(imgPrincess, (i * 30), (j * 30), 30, 30);
+                        arrMap[j][i] = 99;
+                    }
+                }
+            }, false);
+
+            canvas.addEventListener('mousemove', function (evt) {
+                if (hasOption == 0) {
+                    return;
+                }
+                var rect = canvas.getBoundingClientRect();
+                var mouseX = evt.clientX - rect.left - 0.5;
+                var mouseY = evt.clientY - rect.top;
+                if (mouseX < 0 || mouseY < 0 || mouseX > widthMap || mouseY > heightMap) {
+                    return;
+                }
+                if (mouseX % 30 == 0 || mouseY % 30 == 0) {
+                    return;
+                }
+
+                var oi = Math.floor(oldX / 30), oj = Math.floor(oldY / 30);
+                var i = Math.floor(mouseX / 30), j = Math.floor(mouseY / 30);
+                //if (oj >= Cols) {
+                //    oj--;
+                //}
+                //if (j >= Rows-1) {
+                //    j--;
+                //}
+                //var idx_i = i - 1 < 0 ? 0 : i - 1;
+                //var idx_j = j - 1 < 0 ? 0 : j - 1;
+                if (oi != -1 || oj != -1) {
+                    if (oi != i || oj != j) {
+                        //var idx_oi = oi - 1 < 0 ? 0 : oi - 1;
+                        //var idx_oj = oj - 1 < 0 ? 0 : oj - 1;
+                        if (oj <= Rows && oi <= Cols && arrMap[oj][oi] == 0) {
+
+                            //context.fillStyle = "white";
+                            //context.fillRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect()-7);
+                            context.clearRect((oi * 30), (oj * 30), 30, 30);
+                            oldX = mouseX;
+                            oldY = mouseY;
+                        }
+                    }
+                }
+                oldX = mouseX;
+                oldY = mouseY;
+                if (j <= Rows && i <= Cols && arrMap[j][i] == 0) {
+                    if (hasOption == 1) {
+                        context.drawImage(imgWallOption, (i * 30), (j * 30), 30, 30);
+                    }
+                    if (hasOption == 2) {
+                        context.drawImage(imgMario, (i * 30), (j * 30), 30, 30);
+                    }
+                    if (hasOption == 3) {
+                        context.drawImage(imgPrincess, (i * 30), (j * 30), 30, 30);
+                    }
+                }
+            }, false);
             $("#lstMap").on("change", function (e) {
-                e.preventDefault();
+                var mapid = $(this).val();
+
                 $("#LetGo").removeAttr("disabled");
                 OldMap = null;
                 ResetMap();
@@ -158,7 +250,7 @@
                 //$('#accordion').collapse({
                 //    toggle: false
                 //})
-                var mapid = $(this).val();
+
                 if (mapid == "0") {
                     context.clearRect(0, 0, widthMap, heightMap);
                     $("#mapMain").css("background-image", "none");
@@ -167,7 +259,7 @@
                 }
                 $.ajax({
                     url: "/Tank/LoadMap?mapid=" + mapid,
-                    cache: false,
+                    cache: true,
                     success: function (data) {
                         //console.log(data);
                         Map = data.Map;
@@ -181,7 +273,7 @@
                 });
             });
             $("#LetGo").on("click", function () {
-                
+
                 if ($("#lstMap").val() == "0") {
                     alert('Vui lòng chọn bản đồ.');
                     return;
@@ -190,28 +282,45 @@
                 //if (intervalgo != null) {
                 //    clearInterval(intervalgo);
                 //}
+                //$.ajax({
+                //    type: "POST",
+                //    url: "/Tank/ReloadMap",
+                //    data: { map: arrMap }
+                //    , success: function (data) {
+
+                //    }, error: function (x, e) {
+
+                //    }
+                //})
+                //return;
                 $.ajax({
-                    async: false,
-                    cache: false,
+                    async: true,
+                    type: "POST",
                     url: "/Tank/LetGo",
+                    data: { map: arrMap },
                     //beforeSend: function () {
                     //    $("#loaderMain").css("display", "block");
                     //},
                     //complete: function () {
                     //    $("#loaderMain").css("display", "none");
                     //},
-                    success: function (Map) {
-                        console.log(Map);
+                    success: function (Result) {
+                        if (Result.ret == 0) {
+                            alert("Không tìm thấy đường đi");
+                            return;
+                        }
+                        console.log(Result.Map);
                         ResetMap();
-                        OldMap = Map;
-                        
+                        OldMap = Result.Map;
+
                         var i = 1;
-                         intervalgo = setInterval(function () {
-                            
-                            if (i == Map.length - 2) {
+                        intervalgo = setInterval(function () {
+
+                            if (i == Result.Map.length - 2) {
                                 clearInterval(intervalgo);
+
                             }
-                            context.drawImage(imgMario, (Map[i].Col * 30), (Map[i].Row * 30), 30, 30);
+                            context.drawImage(imgMario, (Result.Map[i].Col * 30), (Result.Map[i].Row * 30), 30, 30);
                             i++;
                             $("#CountStep").text("Số bước đi: " + i);
                         }, Speed);
@@ -226,7 +335,12 @@
             $("#lstStep").on("change", function () {
                 Speed = $(this).val();
             });
+            $("#lstOption").on("change", function (e) {
+                var option = $(this).val();
+                hasOption = parseInt(option);
+            });
         });
+
         function DrawMap() {
             context.clearRect(0, 0, widthMap, heightMap);
             $("#mapMain").css("background-image", "none");
@@ -251,7 +365,23 @@
             //    context.moveTo(0, i * 30);
             //    context.lineTo(widthMap, i * 30);
             //}
+            var i = 0, j = 0, arr = [];
+            arrMap = new Array(Rows);
+            for (var ix = 0; ix < Rows; ix++) {
+                arrMap[ix] = new Array(Cols)
+            }
             $.each(Map, function (key, cell) {
+                if (j == Cols) {
+                    j = 0;
+                    i++;
+                    //arrMap.push(arr);
+                    //arr = [];
+                }
+                arrMap[i][j] = cell.Status;
+
+
+                //arr.push(cell.Status);
+                j++;
                 switch (cell.Status) {
                     case 1: context.drawImage(imgWall, (cell.Col * 30), (cell.Row * 30), 30, 30); break;
                     case -1: {
@@ -274,6 +404,7 @@
 
 
             });
+            console.log(arrMap);
             context.fillStyle = "#9ea7b8";
             context.closePath();
 
@@ -286,19 +417,20 @@
 
         }
         function ResetMap() {
-            $("#loaderMain").css("display", "block");
+            //$("#loaderMain").css("display", "block");
             if (intervalgo != null) {
                 clearInterval(intervalgo);
             }
-            
+
             if (OldMap != null) {
                 $.each(OldMap, function (key, cell) {
+
                     if (cell.Status == 99 || cell.Status == -1) return;
                     context.clearRect((cell.Col * 30), (cell.Row * 30), 30, 30);
                 });
 
             }
-           // $("#loaderMain").css("display", "none");
+            // $("#loaderMain").css("display", "none");
         }
 
     </script>

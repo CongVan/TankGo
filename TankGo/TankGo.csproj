@@ -95,11 +95,8 @@
     <Content Include="Asset\imgMap.png" />
     <Content Include="Asset\mario.png" />
     <Content Include="Asset\princess.png" />
-    <Content Include="Asset\Tank.png" />
-    <Content Include="Asset\Tank_Down.png" />
-    <Content Include="Asset\Tank_Left.png" />
-    <Content Include="Asset\Tank_Right.png" />
     <Content Include="Asset\Wall.png" />
+    <Content Include="Asset\WallOption.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />

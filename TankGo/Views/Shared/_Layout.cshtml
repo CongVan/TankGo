@@ -12,7 +12,7 @@
 </head>
 
 <body class="container-fluid">
-      
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Tùy chọn </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,29 +32,29 @@
                         <option selected value="0">Chọn bản đồ ... </option>
                         @for (int i = 1; i <= 8; i++)
                         {
-                        <option value="Map_@i">Bản đồ @i</option>
+                            <option value="Map_@i">Bản đồ @i</option>
 
                         }
                     </select>
                 </li>
-               
-               
-              
+
+
+
             </ul>
             <ul class="navbar-nav mr-auto">
                 @*<li class="nav-item active">
-                <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>*@
+                        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>*@
                 <li class="nav-item mr-3">
                     <select class="custom-select mr-sm-2" id="lstStep">
                         <option selected value="50">50</option>
                         @for (int i = 1; i <= 8; i++)
                         {
-                           
-                            <option value="@(i*100)">@(i*100)</option>
+
+                            <option value="@(i*100)">@(i * 100)</option>
 
                         }
                     </select>
@@ -63,6 +63,18 @@
                 <li class="nav-item">
                     <button class="btn btn-primary" id="LetGo" disabled>Bắt đầu</button>
                 </li>
+
+            </ul>
+            <ul class="navbar-nav ml-auto mr-3">
+                <li>
+                    <select class="custom-select mr-sm-2" id="lstOption">
+                        <option value="0">Chọn tùy chỉnh bản đồ...</option>
+                        <option value="1">Thêm vật cản</option>
+                        <option value="2">Vị trí mario</option>
+                        <option value="3">Vị trí công chúa</option>
+                    </select>
+                </li>
+
 
             </ul>
             <button class="btn btn-danger font-weight-bold" id="CountStep">Số bước đi: </button>
@@ -77,8 +89,8 @@
         @RenderBody()
         @*<hr />*@
         @*<footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>*@
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
     </div>
 
     <script src="~/dist/js/jquery-3.2.1.min.js"></script>

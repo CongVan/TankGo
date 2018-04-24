@@ -9,7 +9,7 @@ namespace TankGo.Controllers
 {
     public class TankController : Controller
     {
-          List<Cell> Map = new List<Cell>();
+        static  List<Cell> Map = new List<Cell>();
         static  List<List<int>> Matrix = new List<List<int>>();
         static  int[,] MaTran = null;
         static  Node P = new Node(), G = new Node();
@@ -19,7 +19,7 @@ namespace TankGo.Controllers
         {
             return View();
         }
-        
+  
         public ActionResult LoadMap(string mapid)
         {
             string[] lines = System.IO.File.ReadAllLines(HttpContext.Server.MapPath("/layouts/" + mapid + ".txt"));
@@ -114,10 +114,27 @@ namespace TankGo.Controllers
                 }
             }
         }
-        public ActionResult LetGo()
+        [HttpPost]
+        public ActionResult LetGo(List<List<int>> map)
         {
+            for (int i = 0; i < map.Count; i++)
+            {
+                for (int j = 0; j < map[i].Count; j++)
+                {
+                    MaTran[i,j] = map[i][j];
+                }
+            }
             List < Cell > lst= AStart(MaTran, RowsMaTran, ColsMaTran, P, G);
-            return Json(lst,JsonRequestBehavior.AllowGet);
+            if (lst != null)
+            {
+                return Json(new { Map = lst, ret = 1 },JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { Map = lst, ret = 0 }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult ReloadMap(List<List<int>> map)
+        {
+            return Json(0,JsonRequestBehavior.AllowGet);
         }
         public static Double KCach(int x1, int y1, int x2, int y2)
         {
@@ -139,6 +156,10 @@ namespace TankGo.Controllers
                 TempX.ID = ID;
                 Luu.Add(TempX);
                 ID++;
+                if (ID >= Map.Count)
+                {
+                    return null;
+                }
                 X.RemoveAt(0);
                 //nếu là G thì dừng
                 if (TempX.x == G.x && TempX.y == G.y)
@@ -216,15 +237,17 @@ namespace TankGo.Controllers
             }
             /////Lấy  Cells đường đi
             //bắt đầu từ G
+            List<Cell> T = new List<Cell>();
             if (Kt.IDparent == -1)
             {
+                return T;
                 //không có đường đi
-                Console.WriteLine("Không tìm thất đường đi");
+                //Console.WriteLine("Không tìm thất đường đi");
             }
             //nếu có đường đi thì duyệt
             //Thêm G và P vào cell
 
-            List<Cell> T = new List<Cell>();
+           
             //Hiển thị ra màn hình
             int index = Kt.ID;
             for (int i = 0; i < Luu.Count(); i++)
