@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Mario cứu công chúa";
 }
 <style>
     .thumbnail {
@@ -103,9 +103,12 @@
 <img id="imgMario" hidden src="~/Asset/mario.png" />
 <img id="imgPrincess" hidden src="~/Asset/princess.png" />
 <img id="imgWall" hidden src="~/Asset/Wall.png" />
-<img id="imgFoot" hidden src="~/Asset/footprint.png" />
+
 <img id="imgWallOption" hidden src="~/Asset/WallOption.png" />
-<div id="loaderMain" style="width:100%;height:100%;position:fixed;background-color:#000000;opacity:0.6;display:none;z-index:1000">
+
+<img  id="imgMushroomGo" hidden src="~/Asset/MushroomGo.png" />
+
+<div id="loaderMain" class="container-fluid" style="width:100%;height:100%;position:fixed;background-color:#000000;opacity:0.6;display:none;z-index:1000">
     <div class="sk-cube-grid">
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
@@ -120,7 +123,14 @@
     <h6 class="text-center text-white" id="txtLoader">Đang tải...</h6>
 </div>
 <div class="row mt-2">
-
+    <div class="card card-body text-center" id="descriptionTeam">
+        <h1 class="text-success">MARIO TÌM CÔNG CHÚA - THUẬT TOÁN A*</h1>
+        <h3 class=""><u>THÀNH VIÊN - NHÓM 16</u></h3>
+        <h4> 1742013 - Nguyễn Ngọc Bình Dương</h4>
+        <h4>1742066 - Trịnh Văn Thịnh</h4>
+        <h4>1742081 - Huỳnh Công Văn</h4>
+        <h4>1742087 - Nguyễn Đình Vương </h4>
+    </div>
     <div class="col-md-10">
         <canvas id="mapMain" style="cursor:pointer"></canvas>
     </div>
@@ -137,7 +147,11 @@
         var imgWall = document.getElementById("imgWall");//$("#imgWall").val();
         var imgFoot = document.getElementById("imgFoot");
         var imgWallOption = document.getElementById("imgWallOption");
+        var imgMarioGo = document.getElementById("imgMarioGo");
+        var imgMushroomGo = document.getElementById("imgMushroomGo");
+        var imgMushroomGif = document.getElementById("imgMushroomGif");
         var canvas = document.getElementById('mapMain');
+
         var intervalgo = null;
         var context = canvas.getContext('2d');
         var pxStart = 0, pyStart = 0, pyEnd = 0, pxEnd = 0, hasOption = false;
@@ -173,16 +187,27 @@
 
                 if (j <= Rows && i <= Cols && arrMap[j][i] == 0) {
                     if (hasOption == 1) {
-                        context.drawImage(x, (i * 30), (j * 30), 30, 30);
+                        context.drawImage(imgWallOption, (i * 30), (j * 30), 30, 30);
                         arrMap[j][i] = 1;
                     }
                     if (hasOption == 2) {
                         context.drawImage(imgMario, (i * 30), (j * 30), 30, 30);
                         arrMap[j][i] = -1;
+                        arrMap[pyStart][pxStart] = 0;
+                       
+                        context.clearRect((pxStart * 30), (pyStart * 30), 30, 30);
+                        pyStart = j;
+                        pxStart = i;
                     }
                     if (hasOption == 3) {
                         context.drawImage(imgPrincess, (i * 30), (j * 30), 30, 30);
                         arrMap[j][i] = 99;
+                        arrMap[j][i] = -1;
+                        arrMap[pyEnd][pxEnd] = 0;
+                       
+                        context.clearRect((pxEnd * 30), (pyEnd * 30), 30, 30);
+                        pyEnd = j;
+                        pxEnd = i;
                     }
                 }
             }, false);
@@ -240,6 +265,7 @@
                 }
             }, false);
             $("#lstMap").on("change", function (e) {
+                $("#descriptionTeam").hide();
                 var mapid = $(this).val();
 
                 $("#LetGo").removeAttr("disabled");
@@ -278,26 +304,18 @@
                     alert('Vui lòng chọn bản đồ.');
                     return;
                 }
-                //ResetMap();
-                //if (intervalgo != null) {
-                //    clearInterval(intervalgo);
-                //}
-                //$.ajax({
-                //    type: "POST",
-                //    url: "/Tank/ReloadMap",
-                //    data: { map: arrMap }
-                //    , success: function (data) {
 
-                //    }, error: function (x, e) {
-
-                //    }
-                //})
-                //return;
                 $.ajax({
                     async: true,
                     type: "POST",
                     url: "/Tank/LetGo",
-                    data: { map: arrMap },
+                    beforeSend: function () {
+                        $("#LetGo").attr("disabled", "disabled");
+                    },
+                    complete: function () {
+                        $("#LetGo").removeAttr("disabled");
+                    },
+                    data: { map: arrMap, pyStart: pyStart, pxStart: pxStart, pyEnd: pyEnd, pxEnd: pxEnd },
                     //beforeSend: function () {
                     //    $("#loaderMain").css("display", "block");
                     //},
@@ -320,7 +338,7 @@
                                 clearInterval(intervalgo);
 
                             }
-                            context.drawImage(imgMario, (Result.Map[i].Col * 30), (Result.Map[i].Row * 30), 30, 30);
+                            context.drawImage(imgMushroomGo, (Result.Map[i].Col * 30) + 5, (Result.Map[i].Row * 30) + 5, 20, 20);
                             i++;
                             $("#CountStep").text("Số bước đi: " + i);
                         }, Speed);
@@ -339,6 +357,9 @@
                 var option = $(this).val();
                 hasOption = parseInt(option);
             });
+            $("#reStartMap").on("click", function () {
+                $("#lstMap").change();
+            });
         });
 
         function DrawMap() {
@@ -355,17 +376,9 @@
             $("#mapMain").prop("height", heightMap);
             $("#mapMain").css("background-image", 'linear-gradient(to left, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%),url(/Asset/background.png)');
             context.beginPath();
-            //draw line with x
-            //for (var i = 0; i <= Cols; i++) {
-            //    context.moveTo(i * 30, 0);
-            //    context.lineTo(i * 30, heightMap);
-            //}
-            ////draw line with y
-            //for (var i = 0; i <= Rows; i++) {
-            //    context.moveTo(0, i * 30);
-            //    context.lineTo(widthMap, i * 30);
-            //}
+
             var i = 0, j = 0, arr = [];
+            arrMap = [];
             arrMap = new Array(Rows);
             for (var ix = 0; ix < Rows; ix++) {
                 arrMap[ix] = new Array(Cols)
@@ -377,13 +390,16 @@
                     //arrMap.push(arr);
                     //arr = [];
                 }
-                arrMap[i][j] = cell.Status;
-
-
-                //arr.push(cell.Status);
+                //console.log(i + "_" + j + "_" + cell.Status);
+                if (i < Rows) {
+                    arrMap[i][j] = cell.Status;
+                }
                 j++;
                 switch (cell.Status) {
-                    case 1: context.drawImage(imgWall, (cell.Col * 30), (cell.Row * 30), 30, 30); break;
+                    case 1: {
+                        context.drawImage(imgWall, (cell.Col * 30), (cell.Row * 30), 30, 30);
+                        break;
+                    }
                     case -1: {
                         pxStart = cell.Col;
                         pyStart = cell.Row;
@@ -423,11 +439,18 @@
             }
 
             if (OldMap != null) {
-                $.each(OldMap, function (key, cell) {
+                for (var i = 0; i < Rows; i++) {
+                    for (var j = 0; j < Cols; j++) {
+                        if (arrMap[i][j] == 0) {
+                            context.clearRect((j * 30), (i * 30), 30, 30);
+                        }
+                    }
+                }
+                //$.each(OldMap, function (key, cell) {
 
-                    if (cell.Status == 99 || cell.Status == -1) return;
-                    context.clearRect((cell.Col * 30), (cell.Row * 30), 30, 30);
-                });
+                //    if ( cell.Status == 99 || cell.Status == -1) return;
+                //    context.clearRect((cell.Col * 30), (cell.Row * 30), 30, 30);
+                //});
 
             }
             // $("#loaderMain").css("display", "none");

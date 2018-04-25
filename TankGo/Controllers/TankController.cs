@@ -9,7 +9,7 @@ namespace TankGo.Controllers
 {
     public class TankController : Controller
     {
-        static  List<Cell> Map = new List<Cell>();
+         List<Cell> Map = new List<Cell>();
         static  List<List<int>> Matrix = new List<List<int>>();
         static  int[,] MaTran = null;
         static  Node P = new Node(), G = new Node();
@@ -22,6 +22,8 @@ namespace TankGo.Controllers
   
         public ActionResult LoadMap(string mapid)
         {
+            Map = null;
+            Map = new List<Cell>();
             string[] lines = System.IO.File.ReadAllLines(HttpContext.Server.MapPath("/layouts/" + mapid + ".txt"));
             int rows=0, cols=0;
             cols = lines[0].Length;
@@ -43,9 +45,7 @@ namespace TankGo.Controllers
                         case ' ':cell.Status = 0;break;//đường đi
                         case 'P':cell.Status = -1;break;//bắt đầu
                         case 'G':cell.Status = 99;break;//kết thúc
-                        default:
-                            cell.Status = 0;
-                            break;
+                        default:cell.Status = 0;break;
                     }
                     MaTran[rows, i] = cell.Status;
                     if (cell.Status == -1)
@@ -67,7 +67,7 @@ namespace TankGo.Controllers
                 rows++;
             }
             
-            return Json(new {Map=Map,Rows=rows,Cols=cols },JsonRequestBehavior.AllowGet);
+            return Json(new {Map=Map,Rows= RowsMaTran, Cols= ColsMaTran },JsonRequestBehavior.AllowGet);
         }
 
         public static void AddNode(Node A, List<Node> X)
@@ -115,7 +115,7 @@ namespace TankGo.Controllers
             }
         }
         [HttpPost]
-        public ActionResult LetGo(List<List<int>> map)
+        public ActionResult LetGo(List<List<int>> map, int pyStart, int pxStart, int pyEnd, int pxEnd)
         {
             for (int i = 0; i < map.Count; i++)
             {
@@ -124,6 +124,13 @@ namespace TankGo.Controllers
                     MaTran[i,j] = map[i][j];
                 }
             }
+            P = null; G=null;
+            P = new Node();
+            P.x = pyStart;
+            P.y = pxStart;
+            G = new Node();
+            G.x = pyEnd;
+            G.y = pxEnd;
             List < Cell > lst= AStart(MaTran, RowsMaTran, ColsMaTran, P, G);
             if (lst != null)
             {
@@ -156,10 +163,11 @@ namespace TankGo.Controllers
                 TempX.ID = ID;
                 Luu.Add(TempX);
                 ID++;
-                if (ID >= Map.Count)
-                {
-                    return null;
-                }
+               
+                //if (ID > Map.Count)
+                //{
+                //    return null;
+                //}
                 X.RemoveAt(0);
                 //nếu là G thì dừng
                 if (TempX.x == G.x && TempX.y == G.y)

@@ -4,29 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mario tìm công chúa</title>
-    <link href="~/dist/css/bootstrap.css" rel="stylesheet" />
-
-    @*<link href="~/dist/css/bootstrap.css" rel="stylesheet" />*@
-    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">*@
+    <link href="~/dist/css/bootstrap.css" rel="stylesheet" />  
 
 </head>
 
 <body class="container-fluid">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Tùy chọn </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top mb-5" style="background-color: #3f51b5!important;">
+        <a class="navbar-brand text-white" href="#">Tùy chọn </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                @*<li class="nav-item active">
-                        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>*@
+            <ul class="navbar-nav mr-auto">
+               
                 <li class="nav-item mr-3">
                     <select class="custom-select mr-sm-2" id="lstMap">
                         <option selected value="0">Chọn bản đồ ... </option>
@@ -37,64 +28,46 @@
                         }
                     </select>
                 </li>
-
-
-
-            </ul>
-            <ul class="navbar-nav mr-auto">
-                @*<li class="nav-item active">
-                        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>*@
                 <li class="nav-item mr-3">
                     <select class="custom-select mr-sm-2" id="lstStep">
-                        <option selected value="50">50</option>
+                        <option selected value="0">Chọn tốc độ...</option>
                         @for (int i = 1; i <= 8; i++)
                         {
 
-                            <option value="@(i*100)">@(i * 100)</option>
+                            <option value="@(i*40)">@(i * 40)</option>
 
                         }
                     </select>
                 </li>
-
-                <li class="nav-item">
-                    <button class="btn btn-primary" id="LetGo" disabled>Bắt đầu</button>
-                </li>
-
-            </ul>
-            <ul class="navbar-nav ml-auto mr-3">
-                <li>
+                <li class="nav-item mr-3" data-toggle="tooltip" data-placement="bottom" title="Chỉnh sửa mê cung trực tiếp.">
                     <select class="custom-select mr-sm-2" id="lstOption">
-                        <option value="0">Chọn tùy chỉnh bản đồ...</option>
+                        <option value="0">Tùy chỉnh bản đồ...</option>
                         <option value="1">Thêm vật cản</option>
-                        <option value="2">Vị trí mario</option>
-                        <option value="3">Vị trí công chúa</option>
+                        <option value="2">Chọn vị trí mario</option>
+                        <option value="3">Chọn vị trí công chúa</option>
                     </select>
                 </li>
-
+                <li class="nav-item">
+                    <button class="btn btn-danger font-weight-bold" id="LetGo" disabled>Bắt đầu</button>
+                    <button class="btn btn-success " id="reStartMap">Làm mới </button>
+                </li>
 
             </ul>
-            <button class="btn btn-danger font-weight-bold" id="CountStep">Số bước đi: </button>
-            @*<form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>*@
+            
+            <button class="btn btn-light font-weight-bold" id="CountStep">Số bước đi: </button>
+          
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-5 pt-2">
         @RenderBody()
-        @*<hr />*@
-        @*<footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>*@
+       
     </div>
 
     <script src="~/dist/js/jquery-3.2.1.min.js"></script>
     <script src="~/dist/js/bootstrap.js"></script>
+    <script src="~/dist/js/bootstrap.bundle.js"></script>
+    <script> $('[data-toggle="tooltip"]').tooltip();</script>
     @RenderSection("js", false)
 </body>
 </html>
